@@ -8,16 +8,20 @@ namespace PathTracer
 {
   public static class Samplers
   {
+    public static double UniformConePdf(double cosTheta) {
+      return 1 / (2 * Math.PI * (1 - cosTheta));
+    }
+
     public static Vector3 UniformSampleSphere()
     {
-            // http://corysimon.github.io/articles/uniformdistn-on-sphere/
-            double theta = Math.Acos(1.0 - 2.0 * ThreadSafeRandom.NextDouble());
-            double phi = 2.0 * Math.PI * ThreadSafeRandom.NextDouble();
-            return new Vector3(
-                Math.Sin(theta) * Math.Cos(phi),
-                Math.Sin(theta) * Math.Sin(phi),
-                Math.Cos(theta)
-            );
+      // http://corysimon.github.io/articles/uniformdistn-on-sphere/
+      double theta = Math.Acos(1.0 - 2.0 * ThreadSafeRandom.NextDouble());
+      double phi = 2.0 * Math.PI * ThreadSafeRandom.NextDouble();
+      return new Vector3(
+          Math.Sin(theta) * Math.Cos(phi),
+          Math.Sin(theta) * Math.Sin(phi),
+          Math.Cos(theta)
+      );
     }
 
     public static (double, double) UniformSampleSquare()

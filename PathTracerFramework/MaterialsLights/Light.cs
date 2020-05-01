@@ -30,13 +30,13 @@ namespace PathTracer
       // Sample light source with importance sampling
       (Spectrum Li, Vector3 wi, double lightPdf, Vector3 lightPt) = Sample_Li(it);
 
-      var shp = it.Obj as Shape;
-      Spectrum f = shp.BSDF.f(it.Wo, wi, it) * Vector3.AbsDot(wi, it.Normal);
-
-      if (!s.Unoccluded(it.Point, lightPt))
+      if (!s.Unoccluded(it.Point, lightPt) || lightPdf == 0)
       {
         return Spectrum.ZeroSpectrum;
       }
+      
+      var shp = it.Obj as Shape;
+      Spectrum f = shp.BSDF.f(it.Wo, wi, it) * Vector3.AbsDot(wi, it.Normal);
 
       return f * Li / lightPdf;
     }

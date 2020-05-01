@@ -5,6 +5,36 @@ namespace PathTracer
   public static class Utils
   {
     public const double PiInv = 1.0 / Math.PI;
+
+    /// My utils
+    // Convert sin to cos and vice versa
+    public static double CosToSin(double cos) {
+      return Math.Sqrt(Math.Max(0, 1 - cos * cos));
+    }
+    public static double SinToCos(double sin) {
+       return CosToSin(sin);
+    }
+    // Create ONB from unit vector
+    public static (Vector3, Vector3) CoordinateSystem(Vector3 v1) {
+      Vector3 v2;
+      if (Math.Abs(v1.x) > Math.Abs(v1.y)) {
+        v2 = new Vector3(-v1.z, 0, v1.x) * (1 / Math.Sqrt(v1.x * v1.x + v1.z * v1.z));
+      } else {
+        v2 = new Vector3(0, v1.z, -v1.y) * (1 / Math.Sqrt(v1.y * v1.y + v1.z * v1.z));
+      }
+      Vector3 v3 = Vector3.Cross(v1, v2);
+      return (v2, v3);
+    }
+    // Spherical direction in a custom coordinate system
+    public static Vector3 SphericalDirection(double sinTheta, double cosTheta, double phi, Vector3 x, Vector3 y, Vector3 z) {
+      return (
+        sinTheta * Math.Cos(phi) * x +
+        sinTheta * Math.Sin(phi) * y +
+        cosTheta * z
+       );
+    }
+
+
     /// <summary>
     /// Solve quadratic equation
     /// </summary>

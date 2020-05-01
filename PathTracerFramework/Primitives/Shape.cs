@@ -32,13 +32,13 @@ namespace PathTracer
         return 0;
 
       // Convert area measure to solid angle measure
-      double pdf = (si.Point- isectLight.Point).LengthSquared() / (Vector3.AbsDot(isectLight.Normal, -wi) * Area());
+      double pdf = (si.Point - isectLight.Point).LengthSquared() / (Vector3.AbsDot(isectLight.Normal, -wi) * Area());
       if (double.IsInfinity(pdf))
         pdf = 0;
       return pdf;
     }
 
-    public (SurfaceInteraction, double) Sample(SurfaceInteraction si)
+    public virtual (SurfaceInteraction, double) Sample(SurfaceInteraction si)
     {
       (SurfaceInteraction intr, double pdf) = Sample();
       var wi = intr.Point - si.Point;

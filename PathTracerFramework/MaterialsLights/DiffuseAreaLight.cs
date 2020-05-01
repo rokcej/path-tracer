@@ -10,11 +10,17 @@ namespace PathTracer
   {
     Shape shape;
     Spectrum Lemit;
+    SideEnum side;
 
-    public DiffuseAreaLight(Shape s, Spectrum l, double intensity = 1)
+    public enum SideEnum { 
+      Front, Back, Both
+    }
+
+    public DiffuseAreaLight(Shape s, Spectrum l, double intensity = 1, SideEnum sd = SideEnum.Front)
     {
       shape = s;
       Lemit = l * intensity;
+      side = sd;
     }
 
     public override (double?, SurfaceInteraction) Intersect(Ray r)
@@ -46,13 +52,26 @@ namespace PathTracer
 
       var wi = (pShape.Point - source.Point).Normalize();
       var Li = L(pShape, -wi);
+
       return (Li, wi, pdf, pShape.Point);
     }
 
 
     public override Spectrum L(SurfaceInteraction intr, Vector3 w)
     {
-      return (Vector3.Dot(intr.Normal, w) > 0) ? Lemit : Spectrum.ZeroSpectrum;
+      double dot = 0;
+      switch (side) {
+        case SideEnum.Front:
+            dot = Vector3.Dot(intr.Normal, w);
+            break;
+        case SideEnum.Back:
+            dot = Vector3.Dot(-intr.Normal, w); // Flip normal
+            break;
+        case SideEnum.Both:
+            dot = Vector3.AbsDot(intr.Normal, w); // Get absolute dot product
+            break;
+      }
+      return (dot > 0) ? Lemit : Spectrum.ZeroSpectrum;
     }
 
 
