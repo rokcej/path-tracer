@@ -58,6 +58,7 @@ namespace PathTracer
       tokenSource = new CancellationTokenSource();
 
       Scene s = Scene.CornellBox();
+      //Scene s = Scene.TestScene();
 
       bmp = new Bitmap(bitmapWidth, (int)Math.Round(bitmapWidth / s.AspectRatio), PixelFormat.Format24bppRgb);
       pbxRender.Image = bmp;

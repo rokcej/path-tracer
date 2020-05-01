@@ -109,8 +109,8 @@ namespace PathTracer
 
 
       el = new Sphere(100, Transform.Translate(150, 100, 420));
-      el.BSDF.Add(new Lambertian(Spectrum.ZeroSpectrum.FromRGB(Color.Blue)));
-      //el.BSDF.Add(new OrenNayar(Spectrum.ZeroSpectrum.FromRGB(Color.Blue), 100));
+      //el.BSDF.Add(new Lambertian(Spectrum.ZeroSpectrum.FromRGB(Color.Blue)));
+      el.BSDF.Add(new OrenNayar(Spectrum.ZeroSpectrum.FromRGB(Color.Blue), 0.3));
       s.Elements.Add(el);
 
       el = new Sphere(100, Transform.Translate(400, 100, 230));
@@ -119,12 +119,45 @@ namespace PathTracer
       //el.BSDF.Add(new SpecularReflection(Spectrum.ZeroSpectrum.FromRGB(Color.White),1,1.5));
       //el.BSDF.Add(new SpecularTransmission(Spectrum.ZeroSpectrum.FromRGB(Color.White), 1, 1.5));
 
-      el.BSDF.Add(new Lambertian(Spectrum.ZeroSpectrum.FromRGB(Color.Yellow)));
-      //el.BSDF.Add(new OrenNayar(Spectrum.ZeroSpectrum.FromRGB(Color.Yellow), 100));
+      //el.BSDF.Add(new Lambertian(Spectrum.ZeroSpectrum.FromRGB(Color.Yellow)));
+      el.BSDF.Add(new OrenNayar(Spectrum.ZeroSpectrum.FromRGB(Color.Yellow), 0.8));
       s.Elements.Add(el);
 
       return s;
 
+    }
+
+    public static Scene TestScene() {
+      var s = new Scene() {
+        CameraOrigin = new Vector3(278, 274.4, -800),
+        AspectRatio = 1.0 / 1.0,
+        ImagePlaneWidth = 5.5
+      };
+
+      Shape el;
+
+      // Floor
+      el = new Quad(556.0, 559.2, Transform.Translate(556.0 / 2, 0, 559.2 / 2).A(Transform.RotateX(-90)));
+      el.BSDF.Add(new Lambertian(Spectrum.ZeroSpectrum.FromRGB(Color.White)));
+      s.Elements.Add(el);
+
+      // Lights
+
+      //s.Elements.Add(new DiffuseAreaLight(new Disk(2000, 0.1, Transform.Translate(278, 1000, 280).A(Transform.RotateX(90))), Spectrum.Create(1), 1.5));
+      s.Elements.Add(new DiffuseAreaLight(new Sphere(1000, Transform.Translate(278, 3000, 150)), Spectrum.Create(1), 12, DiffuseAreaLight.SideEnum.Front));
+      //s.Elements.Add(new DiffuseAreaLight(new Sphere(2000, Transform.Translate(278, 548, 280)), Spectrum.Create(1), .8, DiffuseAreaLight.SideEnum.Back));
+
+
+
+      el = new Sphere(100, Transform.Translate(150, 100, 230)); //.A(Transform.RotateY(-90)));
+      el.BSDF.Add(new OrenNayar(Spectrum.ZeroSpectrum.FromRGB(Color.Yellow), 20.0));
+      s.Elements.Add(el);
+
+      el = new Sphere(100, Transform.Translate(400, 100, 230));
+      el.BSDF.Add(new Lambertian(Spectrum.ZeroSpectrum.FromRGB(Color.Yellow)));
+      s.Elements.Add(el);
+
+      return s;
     }
   }
 }

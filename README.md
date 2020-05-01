@@ -3,6 +3,10 @@
 Simple path tracer created for my Advanced Computer Graphics class.
 
 Added features:
-* Path tracing with Russian roulette stopping and importance sampling
-* Spherical lights with configurable emission side (inner, outer, both)
+* Path tracing
+	* Russian roulette stopping
+	* Importance sampling
+* Spherical lights
+	* Configurable emission side (inner, outer, both) `SideEnum`
 * Oren-Nayar BRDF material
+	* Configurable roughness parameter `sigma`
