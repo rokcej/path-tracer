@@ -2,7 +2,14 @@
 
 Simple path tracer created for my Advanced Computer Graphics class.
 
-Added features:
+## Renders
+
+![Lambertian example](renders/sphere_light_lambertian.png "Lambertian example")
+
+![Oren-Nayar vs Lambertian example](renders/oren-nayar_0.9_vs_lambertian.png "Oren-Nayar vs Lambertian example")
+
+## Features
+
 * Path tracing
 	* Russian roulette stopping
 	* Importance sampling
